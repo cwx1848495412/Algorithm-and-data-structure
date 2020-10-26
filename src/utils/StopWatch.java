@@ -16,7 +16,7 @@ public class StopWatch {
 
     public static void stop() {
         stopTime = System.currentTimeMillis();
-        System.out.println(stopTime - startTime + " ms");
+        System.out.println("耗时: " + (stopTime - startTime) + " ms");
     }
 
     private static void reset() {
