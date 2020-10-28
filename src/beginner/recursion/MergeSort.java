@@ -108,7 +108,7 @@ public class MergeSort {
 
         while (index < more) {
             if (arr[index] == arr[R]) {
-                index++;
+
             } else if (arr[index] < arr[R]) {
                 swap(arr, index++, ++less);
             } else if (arr[index] > arr[R]) {
