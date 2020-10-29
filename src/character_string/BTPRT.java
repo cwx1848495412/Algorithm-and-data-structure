@@ -100,7 +100,7 @@ public class BTPRT {
     }
 
     /**
-     * 简易版，帮助理解
+     * bfprt，帮助理解
      *
      * @param arr   数组
      * @param L     左指针
