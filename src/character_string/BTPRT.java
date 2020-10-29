@@ -99,6 +99,82 @@ public class BTPRT {
         arr[R] = temp;
     }
 
+    /**
+     * 简易版，帮助理解
+     *
+     * @param arr   数组
+     * @param L     左指针
+     * @param R     右指针
+     * @param index 一个数组中第K小的数,比如第5,
+     *              那么它所在数组下标应该为 5 - 1 = 4
+     *              index传参4
+     *              index 范围应该在L..R之间
+     */
+    public static int bfprt(int[] arr, int L, int R, int index) {
+        if (L == R) {
+            // 潜台词 L == R == index
+            // 因为index 在L..R之间
+            return arr[index];
+        }
+
+        // bfprt算法取划分值 不会打太偏
+        int pivot = midpointOfMiddle(arr, L, R);
+
+        // 返回等于的左右边界
+        int[] range = netherLands(arr, L, R, pivot);
+
+        if (index >= range[0] && index <= range[1]) {
+            return arr[index];
+        } else if (index < range[0]) {
+            // 去左侧递归
+            return bfprt(arr, L, range[0] - 1, index);
+        } else {
+            // 去右侧递归
+            return bfprt(arr, range[1] + 1, R, index);
+        }
+    }
+
+    private static int midpointOfMiddle(int[] arr, int L, int R) {
+        // 逻辑分N个区域 每个区域5个数值 排序取中点
+        int size = R - L + 1;
+
+        // 数组不满的情况下 还是要申请一个数组存剩下的值
+        int offset = size % 5 == 0 ? 0 : 1;
+
+        // mid arr 申请空间
+        int[] midArr = new int[size / 5 + offset];
+
+        for (int temp = 0; temp < midArr.length; temp++) {
+            int left = L + (temp * 5);
+            // right 右边界可能不满一个完整长度 与最大右边界坐下边界判断
+            int right = Math.min(left + 4, R);
+            // 五个小数组排序
+            midArr[temp] = getMiddle(arr, left, right);
+        }
+        // 中位数组取中点作为返回值
+        return bfprt(midArr, 0, midArr.length - 1, midArr.length / 2);
+    }
+
+    private static int getMiddle(int[] arr, int L, int R) {
+        // 数组排序
+        // 数量级比较小，选择插入排序
+        insertionSort(arr, L, R);
+        // 返回中点,此时数组长度一般为5
+        return arr[(L + R) / 2];
+    }
+
+    private static void insertionSort(int[] arr, int L, int R) {
+        // L       R
+        // 6 7 2 8 3
+        //       i
+        //   j
+        for (int i = L + 1; i < R; i++) {
+            for (int j = i - 1; j >= L && arr[j] > arr[j + 1]; j--) {
+                swap(arr, j, j + 1);
+            }
+        }
+    }
+
     public static void testNetherLands() {
         int[] arr = {5, 7, 5, 4, 8};
         int[] resArr = netherLands(arr, 0, arr.length - 1, 5);
@@ -107,6 +183,7 @@ public class BTPRT {
     }
 
     public static void testProcess() {
+        System.out.println("Random");
 //        int[] arr = {1, 2, 2, 2, 2, 3};
         int[] arr = {5, 8, 4, 6, 7};
         // 假设有序数组
@@ -121,8 +198,25 @@ public class BTPRT {
         System.out.println(res);
     }
 
+    public static void testBfprt() {
+        System.out.println("bfprt");
+//        int[] arr = {1, 2, 2, 2, 2, 3};
+        int[] arr = {5, 8, 4, 6, 7};
+        // 假设有序数组
+        // 找第 3 小的数
+        // 索引所在会是 2
+        int res = bfprt(arr, 0, arr.length - 1, 2);
+
+        // 找第 2 大的数
+        // 索引会是 arr.length - 2
+//        int res = process(arr, 0, arr.length - 1, arr.length - 2);
+        System.out.println(Arrays.toString(arr));
+        System.out.println(res);
+    }
+
     public static void main(String[] args) {
 //        testNetherLands();
         testProcess();
+        testBfprt();
     }
 }
