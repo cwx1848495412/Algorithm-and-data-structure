@@ -100,7 +100,7 @@ public class BTPRT {
     }
 
     /**
-     * bfprt，帮助理解
+     * bfprt, 完整版
      *
      * @param arr   数组
      * @param L     左指针
@@ -209,7 +209,7 @@ public class BTPRT {
 
         // 找第 2 大的数
         // 索引会是 arr.length - 2
-//        int res = process(arr, 0, arr.length - 1, arr.length - 2);
+//        int res = bfprt(arr, 0, arr.length - 1, arr.length - 2);
         System.out.println(Arrays.toString(arr));
         System.out.println(res);
     }
