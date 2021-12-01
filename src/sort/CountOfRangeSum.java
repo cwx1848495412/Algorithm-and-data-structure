@@ -7,9 +7,6 @@ package sort;
  * @create: 2021-12-01 10:37
  */
 public class CountOfRangeSum {
-    public static void main(String[] args) {
-
-    }
 
     public static int function(int[] arr, int upper, int lower) {
         int[] sum = new int[arr.length];
